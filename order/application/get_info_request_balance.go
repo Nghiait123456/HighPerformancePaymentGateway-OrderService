@@ -12,7 +12,7 @@ type (
 
 	AllPartnerBalanceQueryInterface interface {
 		Init() error
-		GetOneRequestBalance(p query_request_balance.ParamQueryOneBalance) query_request_balance.RequestBalanceResponse
+		GetOneOrderInfo(p query_request_balance.ParamQueryOneBalance) query_request_balance.RequestBalanceResponse
 	}
 )
 
@@ -20,7 +20,7 @@ func (a *AllPartnerBalanceQuery) Init() error {
 	return nil
 }
 
-func (a *AllPartnerBalanceQuery) GetOneRequestBalance(p query_request_balance.ParamQueryOneBalance) query_request_balance.RequestBalanceResponse {
+func (a *AllPartnerBalanceQuery) GetOneOrderInfo(p query_request_balance.ParamQueryOneBalance) query_request_balance.RequestBalanceResponse {
 	return a.RequestBalanceQuery.HandleOneRequestQuery(p)
 }
 

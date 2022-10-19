@@ -25,7 +25,7 @@ type (
 	DataResposne struct {
 		Err            error
 		IsOrderIdExist bool
-		Data           orm.BalanceRequestLog
+		Data           orm.Order
 	}
 
 	DataSavedCache struct {

@@ -11,7 +11,7 @@ type (
 	OneRequest struct {
 	}
 
-	DataQuery = orm.BalanceRequestLog
+	DataQuery = orm.Order
 
 	DataResponse struct {
 		Data    DataQuery

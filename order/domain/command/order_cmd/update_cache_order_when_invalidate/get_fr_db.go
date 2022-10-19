@@ -11,7 +11,7 @@ type (
 		Pr ParamQuery
 	}
 
-	DataQuery = orm.BalanceRequestLog
+	DataQuery = orm.Order
 
 	DataFrDBInterface interface {
 		GetFrMysql() (DataQuery, error)

@@ -30,7 +30,7 @@ func (r *RequestBalanceQuery) HealthCheck(c *fiber.Ctx) error {
 	})
 }
 
-func (r *RequestBalanceQuery) GetOneRequestBalance(c *fiber.Ctx) error {
+func (r *RequestBalanceQuery) GetOneOrderInfo(c *fiber.Ctx) error {
 	rqDto := dto_api_request.NewRequestBalanceQuery()
 	res, errB := rqDto.BindDataDto(c)
 	if errB != nil {
@@ -52,7 +52,7 @@ func (r *RequestBalanceQuery) GetOneRequestBalance(c *fiber.Ctx) error {
 		OrderId: rqDto.Request.OrderId,
 	}
 
-	resRQB := r.sv.GetOneRequestBalance(paramSV)
+	resRQB := r.sv.GetOneOrderInfo(paramSV)
 	resProcess := dto_api_response.NewResponseRequestBalanceDto()
 	resProcess.MappingFrServiceRequestBalanceResponse(resRQB)
 
