@@ -6,6 +6,6 @@ import (
 )
 
 var ProviderRequestBalance = wire.NewSet(
-	NewRequestBalanceQuery,
+	NewRequestOrderQuery,
 	application.ProviderService,
 )

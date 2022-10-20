@@ -34,8 +34,9 @@ type (
 	}
 
 	Routes struct {
-		viewController any // project don't have view, only rest api
-		apiController  *handle.RequestBalanceQuery
+		viewController           any // project don't have view, only rest api
+		apiControllerOrderQuery  *handle.RequestOrderQuery
+		apiControllerCreateOrder *handle.CreateOrder
 	}
 )
 
@@ -79,8 +80,9 @@ func (m Module) NewWebServer() web_server.HttpServer {
 }
 
 func (m *Module) ResignApi() {
-	m.HttpServer.Get("balance-query/health-check", m.RouterHttp.apiController.HealthCheck)
-	m.HttpServer.Post("balance-query/request-balance", m.RouterHttp.apiController.GetOneOrderInfo)
+	m.HttpServer.Get("order-service/health-check", m.RouterHttp.apiControllerOrderQuery.HealthCheck)
+	m.HttpServer.Get("order-service/order-info", m.RouterHttp.apiControllerOrderQuery.GetOneOrderInfo)
+	m.HttpServer.Post("balance-query/request-balance", m.RouterHttp.apiControllerCreateOrder.CreateNewOrder)
 }
 
 func (m *Module) StartWebServer() {
@@ -136,8 +138,9 @@ func (m *Module) InitLogs() {
 
 func (m *Module) NewRouter() *Routes {
 	r := Routes{
-		viewController: nil,
-		apiController:  handle.NewRequestBalanceQuery(m.Service),
+		viewController:           nil,
+		apiControllerOrderQuery:  handle.NewRequestOrderQuery(m.Service),
+		apiControllerCreateOrder: handle.NewCreateOrder(m.Service),
 	}
 
 	return &r
@@ -156,9 +159,9 @@ func NewModule() *Module {
 	return &m
 }
 
-func NewRouter(viewController any, apiController *handle.RequestBalanceQuery) *Routes {
+func NewRouter(viewController any, apiController *handle.RequestOrderQuery) *Routes {
 	return &Routes{
-		viewController: viewController,
-		apiController:  apiController,
+		viewController:          viewController,
+		apiControllerOrderQuery: apiController,
 	}
 }

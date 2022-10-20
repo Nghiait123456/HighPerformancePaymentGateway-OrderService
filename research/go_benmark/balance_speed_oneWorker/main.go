@@ -81,7 +81,7 @@ func main() {
 			case resP := <-resFrProcess:
 				return c.Status(resP.httpStatus).JSON(fiber.Map{
 					"message": resP.errorMessage,
-					"detail":  "response form process",
+					"detail":  "response_create_order form process",
 				})
 
 			case <-timeoutProcess:
@@ -89,7 +89,7 @@ func main() {
 				c.Status(http.StatusSeeOther)
 				return c.JSON(JsonResponse{
 					"status": "timeout",
-					"detail": "response form timeout request",
+					"detail": "response_create_order form timeout request",
 				})
 			}
 		}

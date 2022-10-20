@@ -8,10 +8,10 @@ type Order struct {
 	Amount         uint64
 	Status         string
 	PaymentType    string
-	RequestTime    uint32
-	ResponseTime   uint32
-	CreatedAt      uint32
-	UpdatedAt      uint32
+	RequestTime    int
+	ResponseTime   int
+	CreatedAt      int
+	UpdatedAt      int
 }
 
 const (

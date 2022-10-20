@@ -11,6 +11,12 @@ var ProviderAllPartnerBalanceQuery = wire.NewSet(
 	wire.Bind(new(AllPartnerBalanceQueryInterface), new(*AllPartnerBalanceQuery)),
 )
 
+var ProviderCreateOrder = wire.NewSet(
+	NewAllPartnerBalanceQuery,
+	order_query.NewOneRequest,
+	wire.Bind(new(AllPartnerBalanceQueryInterface), new(*AllPartnerBalanceQuery)),
+)
+
 var ProviderService = wire.NewSet(
 	NewService, ProviderAllPartnerBalanceQuery, wire.Bind(new(ServiceInterface), new(*Service)),
 )

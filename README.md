@@ -22,7 +22,9 @@ System design needs one combination of: local-in-memory, remote-in-memory, inval
 5) If Order change status, we action save in mysql cluster. Logs from mysql cluster send to kafka. </br>
 6) Cache service will subscribe kafka and update cache data </br>
 7) When Order sucess, we create order in cassandra and remove order in mysql cluster. It will make the size of mysql stable and not too big. it will make mysql work faster </br>
-8) Prevent race conditions update cache, we have simple solution: One resource push to kafka ( mysql logs, cassandra,...) all include a unix timestand when the source is created. We are only update cache if unix timestand larger. Solution dont cover all case but cover most of the case race conditions cache. </br>
+8) When cache in validate, we get event from redis cluster, and push event to kafka. We update the order status with it. Redis invalidate don't guarantee 100% correct invalidate, we have plus one service auto check to reduce the error to the lowest. </br>
+
+Prevent race conditions update cache, we have simple solution: One resource push to kafka ( mysql logs, cassandra,...) all include a unix timestand when the source is created. We are only update cache if unix timestand larger. Solution dont cover all case but cover most of the case race conditions cache. </br>
 ![](img_readme/system_design_cmd_service.png)
 
 
@@ -41,4 +43,5 @@ System design needs one combination of: local-in-memory, remote-in-memory and in
 4) If not in redis, Query Service will look in Query DB service. To avoid race conditions query to DB, the first request will create one lock record with the purpose of notifying other requests that there is one lock with this object. Other requests when reading this request lock will return status pending. </br>
 5) There will be one smart mechanism, based on the data request creation time and system timeout to decide whether to query into Cassandra or Mysql first. Cassandra contains success or timeout records, and Mysql contains pending or processing records. If not found in one DB, it will look in the other DB, not found in any DB will return an error. </br>
 6) Event update status will be updated to the corresponding redis cluster. </br>
-7) Prevent race conditions update cache, we have simple solution: One resource push to kafka ( mysql logs, cassandra,...) all include a unix timestand when the source is created. We are only update cache if unix timestand larger. Solution dont cover all case but cover most of the case race conditions cache. </br>
+
+Prevent race conditions update cache, we have simple solution: One resource push to kafka ( mysql logs, cassandra,...) all include a unix timestand when the source is created. We are only update cache if unix timestand larger. Solution dont cover all case but cover most of the case race conditions cache. </br>

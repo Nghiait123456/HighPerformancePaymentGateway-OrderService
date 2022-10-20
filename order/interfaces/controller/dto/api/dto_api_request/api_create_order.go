@@ -9,27 +9,24 @@ import (
 )
 
 type (
-	OneRequestBalanceQueryDto struct {
-		OrderId uint64 `json:"OrderId" ml:"OrderId" form:"OrderId" validate:"required,minAmount,maxAmount"`
+	CreateOder struct {
+		RequestDto CreateOrderDto
 	}
 
-	RequestBalanceQuery struct {
-		Request OneRequestBalanceQueryDto
-	}
-
-	RequestBalanceQueryInterface interface {
+	CreateOrderDto struct {
+		PaymentType string `json:"PaymentType" ml:"PaymentType" form:"PaymentType" validate:"required,paymentTypeValid"`
+		PaymentCode int    `json:"PaymentCode" ml:"PaymentCode" form:"PaymentCode" validate:"required,paymentCodeValid"`
 	}
 )
 
-func (one *RequestBalanceQuery) BindDataDto(c *fiber.Ctx) (dto_api_response.ResponseRequestBalanceQuery, error) {
-	var o OneRequestBalanceQueryDto
-	if errBP := c.QueryParser(&o); errBP != nil {
-		res := dto_api_response.ResponseRequestBalanceQuery{
+func (c *CreateOder) BindDataDto(ctx *fiber.Ctx) (dto_api_response.CreateOrder, error) {
+	var o CreateOrderDto
+	if errBP := ctx.BodyParser(&o); errBP != nil {
+		res := dto_api_response.CreateOrder{
 			HttpCode: http_status.StatusBadRequest,
 			Status:   dto_api_response.STATUS_ERROR,
 			Code:     http_status.StatusBadRequest,
 			Message:  "param input not valid, please check doc and try again",
-			Data:     "",
 		}
 
 		errML := fmt.Sprintf("param input not valid, please check doc and try again, detail: %s", errBP.Error())
@@ -37,10 +34,10 @@ func (one *RequestBalanceQuery) BindDataDto(c *fiber.Ctx) (dto_api_response.Resp
 		return res, errBP
 	}
 
-	one.Request = o
-	return dto_api_response.ResponseRequestBalanceQuery{}, nil
+	c.RequestDto = o
+	return dto_api_response.CreateOrder{}, nil
 }
 
-func NewRequestBalanceQuery() *RequestBalanceQuery {
-	return &RequestBalanceQuery{}
+func NewCreateOder() *CreateOder {
+	return &CreateOder{}
 }

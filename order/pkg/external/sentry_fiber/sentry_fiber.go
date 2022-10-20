@@ -26,7 +26,7 @@ type Options struct {
 	// Repanic configures whether Sentry should repanic after recovery, in most cases it should be set to true,
 	// as Fiber.Default includes it's own Recovery middleware what handles http responses.
 	Repanic bool
-	// WaitForDelivery configures whether you want to block the request before moving forward with the response.
+	// WaitForDelivery configures whether you want to block the request before moving forward with the response_create_order.
 	// Because Fiber's default Recovery handler doesn't restart the application,
 	// it's safe to either skip this option or set it to false.
 	WaitForDelivery bool

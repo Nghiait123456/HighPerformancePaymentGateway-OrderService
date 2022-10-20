@@ -12,7 +12,7 @@ import (
 )
 
 type (
-	RequestBalanceQuery struct {
+	RequestOrderQuery struct {
 		sv application.ServiceInterface
 	}
 
@@ -24,13 +24,13 @@ type (
 	}
 )
 
-func (r *RequestBalanceQuery) HealthCheck(c *fiber.Ctx) error {
+func (r *RequestOrderQuery) HealthCheck(c *fiber.Ctx) error {
 	return c.Status(200).JSON(web_server.MapBase{
 		"status": "ok",
 	})
 }
 
-func (r *RequestBalanceQuery) GetOneOrderInfo(c *fiber.Ctx) error {
+func (r *RequestOrderQuery) GetOneOrderInfo(c *fiber.Ctx) error {
 	rqDto := dto_api_request.NewRequestBalanceQuery()
 	res, errB := rqDto.BindDataDto(c)
 	if errB != nil {
@@ -59,8 +59,8 @@ func (r *RequestBalanceQuery) GetOneOrderInfo(c *fiber.Ctx) error {
 	return resProcess.Response(c)
 }
 
-func NewRequestBalanceQuery(sv application.ServiceInterface) *RequestBalanceQuery {
-	return &RequestBalanceQuery{
+func NewRequestOrderQuery(sv application.ServiceInterface) *RequestOrderQuery {
+	return &RequestOrderQuery{
 		sv: sv,
 	}
 }
